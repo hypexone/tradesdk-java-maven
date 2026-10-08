@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) Hypexone. All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>trade-sdk</artifactId>
+    <groupId>com.hypexone.trade.sdk</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Hypexone Trade SDK</name>
+    <packaging>pom</packaging>
+    <inceptionYear>2026</inceptionYear>
+    <description>Hypexone Trade SDK is a client library for placing and managing bet tickets. SDK exposes well defined API and hides ticket response parsing, proper connection handling, error recovery, event queuing and dispatching. It also makes a client solution easier to maintain with regular version updates.</description>
+    <url>https://github.com/hypexone/tradesdk-java</url>
+    <developers>
+        <developer>
+            <id>hypexone</id>
+            <name>Hypexone</name>
+            <organization>Hypexone</organization>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>api</module>
+        <module>app</module>
+        <module>impl</module>
+        <module>ws</module>
+    </modules>
+
+    <properties>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.compiler.release>17</maven.compiler.release>
+
+        <!-- ALL DEPENDENCY VERSIONS MUST BE DEFINED HERE -->
+        <rabbitmq.version>4.12.0</rabbitmq.version>
+        <commons-lang3.version>3.13.0</commons-lang3.version>
+        <jackson.version>2.15.2</jackson.version>
+        <logback.version>1.4.11</logback.version>
+        <slf4j.version>2.0.9</slf4j.version>
+        <guava.version>32.1.2-jre</guava.version>
+        <guice.version>7.0.0</guice.version>
+        <junit.version>4.13.2</junit.version>
+        <mockito.version>5.6.0</mockito.version>
+        <hamcrest.version>2.2</hamcrest.version>
+        <apache.httpComponents.version>4.5.14</apache.httpComponents.version>
+        <snake.yaml.version>2.2</snake.yaml.version>
+        <commons-csv.version>1.10.0</commons-csv.version>
+        <jakarta.annotation-api.version>2.1.1</jakarta.annotation-api.version>
+        <jakarta.xml.bind-api.version>4.0.1</jakarta.xml.bind-api.version>
+        <jaxb-runtime.version>4.0.3</jaxb-runtime.version>
+
+        <internal.snapshotRepository.id>github</internal.snapshotRepository.id>
+        <internal.snapshotRepository.url>https://maven.pkg.github.com/hypexone/tradesdk-java</internal.snapshotRepository.url>
+        <internal.repository.id>github</internal.repository.id>
+        <internal.repository.url>https://maven.pkg.github.com/hypexone/tradesdk-java</internal.repository.url>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- *** INTERNAL LIBs *** -->
+            <dependency>
+                <groupId>com.hypexone.trade.sdk.api</groupId>
+                <artifactId>trade-sdk-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hypexone.trade.sdk.impl</groupId>
+                <artifactId>trade-sdk-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hypexone.trade.sdk.impl.di</groupId>
+                <artifactId>trade-sdk-impl-di</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hypexone.trade.sdk.impl.libs</groupId>
+                <artifactId>trade-sdk-impl-libs</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hypexone.trade.sdk.ws</groupId>
+                <artifactId>trade-sdk-ws</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- *** INFRASTRUCTURE *** -->
+            <dependency>
+                <groupId>com.rabbitmq</groupId>
+                <artifactId>amqp-client</artifactId>
+                <version>${rabbitmq.version}</version>
+            </dependency>
+
+            <!-- *** REST *** -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>${jakarta.annotation-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>${jakarta.xml.bind-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb-runtime.version}</version>
+            </dependency>
+
+
+            <!-- *** COMMON STUFF *** -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${apache.httpComponents.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snake.yaml.version}</version>
+            </dependency>
+
+            <!-- *** TESTING *** -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest</artifactId>
+                <version>${hamcrest.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- GitHub Packages of tradesdk-java. The publish workflow then copies only the jars and POMs
+         to the public hypexone/tradesdk-java-maven repository. -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>${internal.snapshotRepository.id}</id>
+            <url>${internal.snapshotRepository.url}</url>
+        </snapshotRepository>
+        <repository>
+            <id>${internal.repository.id}</id>
+            <url>${internal.repository.url}</url>
+            <uniqueVersion>true</uniqueVersion>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <!--                    <execution>-->
+                    <!--                        <id>default-check</id>-->
+                    <!--                        <goals>-->
+                    <!--                            <goal>check</goal>-->
+                    <!--                        </goals>-->
+                    <!--                        <configuration>-->
+                    <!--                            <rules>-->
+                    <!--                                <rule>-->
+                    <!--                                    <element>BUNDLE</element>-->
+                    <!--                                    <limits>-->
+                    <!--                                        <limit>-->
+                    <!--                                            <counter>COMPLEXITY</counter>-->
+                    <!--                                            <value>COVEREDRATIO</value>-->
+                    <!--                                            <minimum>0.60</minimum>-->
+                    <!--                                        </limit>-->
+                    <!--                                    </limits>-->
+                    <!--                                </rule>-->
+                    <!--                            </rules>-->
+                    <!--                        </configuration>-->
+                    <!--                    </execution>-->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
